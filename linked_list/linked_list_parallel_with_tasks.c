@@ -67,11 +67,10 @@ int main(int argc, char *argv[]) {
   head = p;
 
   start = omp_get_wtime();
-  #pragma omp parallel
+#pragma omp parallel default(none) shared(p)
   {
     #pragma omp single
     {
-    #pragma omp tasks
       while (p != NULL) {
         {
           #pragma omp task
