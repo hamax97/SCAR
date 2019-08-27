@@ -67,10 +67,16 @@ int main(int argc, char *argv[]) {
   head = p;
 
   start = omp_get_wtime();
+  #pragma omp parallel default(none) shared(p)
   {
+    struct node *temp = NULL;
     while (p != NULL) {
-      processwork(p);
-      p = p->next;
+      #pragma omp critical
+      {
+        temp = p;
+        p = p->next;
+      }
+      processwork(temp);
     }
   }
   end = omp_get_wtime();
